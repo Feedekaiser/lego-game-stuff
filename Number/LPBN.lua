@@ -1,20 +1,20 @@
 --[[
 	File: LPBN.lua
 	
-	--Super low quality code.
+	--Low quality code.
 	
 	--Ultra low precision. Hence LP. Works great(?) for games tho.
 	If you need precision see https://github.com/ennorehling/euler/blob/master/BigNum.lua
 	
 	--Didn't use __eq  __add and the likes meta events. 
-	Very inhuman but whatever. I don't care, add your own metamethods if you really want.
+	Very inhuman but whatever.
 
 	Notes:
 	--They do not mutate the value. Meaning:
 	a = BigNum.new(1000)
 	print(BigNum.Normalize(a).Exponent) --> 3
 	print(a.Mantissa, a.Exponent) --> 1000, 0
-		--THESE OPERATIONS MIGHT BE INACCURATE IF THE VALUE PASSED IS NOT NORMALIZED!
+	--THESE OPERATIONS MIGHT BE INACCURATE IF THE VALUE PASSED IS NOT NORMALIZED!
 	--THESE OPERATIONS MIGHT BE INACCURATE IF THE VALUE PASSED IS NOT NORMALIZED!
 	--THESE OPERATIONS MIGHT BE INACCURATE IF THE VALUE PASSED IS NOT NORMALIZED!
 
