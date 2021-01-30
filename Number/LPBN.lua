@@ -1,12 +1,12 @@
 --[[
 	File: LPBN.lua
-	
+
 	--Super low quality code.
-	
+
 	--Ultra low precision. Hence LP. Works great(?) for games tho.
 	If you need precision see https://github.com/ennorehling/euler/blob/master/BigNum.lua
-	
-	--Didn't use __eq  __add and the likes meta events. 
+
+	--Didn't use __eq  __add and the likes meta events.
 	Very inhuman but whatever. I don't care, add your own metamethods if you really want.
 
 	Notes:
@@ -14,100 +14,112 @@
 	a = BigNum.new(1000)
 	print(BigNum.Normalize(a).Exponent) --> 3
 	print(a.Mantissa, a.Exponent) --> 1000, 0
-		--THESE OPERATIONS MIGHT BE INACCURATE IF THE VALUE PASSED IS NOT NORMALIZED!
+	--THESE OPERATIONS MIGHT BE INACCURATE IF THE VALUE PASSED IS NOT NORMALIZED!
 	--THESE OPERATIONS MIGHT BE INACCURATE IF THE VALUE PASSED IS NOT NORMALIZED!
 	--THESE OPERATIONS MIGHT BE INACCURATE IF THE VALUE PASSED IS NOT NORMALIZED!
 
-	--Value change per update have limits. If you just changed the mantissa by setting it manually and called 
-	update, this is due to the fact that everything will overflow, so a primitive check is done to prevent so and if 
+	--Value change per update have limits. If you just changed the mantissa by setting it manually and called
+	update, this is due to the fact that everything will overflow, so a primitive check is done to prevent so and if
 	the mantissa is at math.huge or -math.huge, it snap the value to either 2 ^ 1023 or its negative counterpart.
-	
+
 	----------------------------------------------------------------Line of seperation---------------------------------------------------------------
-	
+
 	----------------------------------------------------------------------Functions---------------------------------------------------------------------
-	
+
 	BigNum.new(Mantissa: number | nil, Exponent: number | nil)
-	
+
 	BigNum.new() --> {Mantissa = 0, Exponent = 0}
 	BigNum.new(3) --> {Mantissa = 3, Exponent = 0}
 	BigNum.new(1, 6) --> {Mantissa = 1, Exponent = 6}
-	
+
 	We will be refering to the table returned as BigNumObject below.
 
 	----------------------------------------------------------------Line of seperation---------------------------------------------------------------
-	
+
 	BigNum.Clone(BigNumObject)
-	
+
 	Returns a clone of the BigNumObject. This might be essential in some situation since they are tables and are
 	inherently prone to being mutated.
-	
+
 	This function just calls BigNum.new() with the parameters of the BigNumObject.
-	
+
 	----------------------------------------------------------------Line of seperation---------------------------------------------------------------
-	
+
 	BigNum.Normalize(BigNumObject)
-	
+
 	Returns a normalized BigNumObject, in decimal.
-	
+
 	BigNum.Normalize(BigNum.new(11)) --> {Mantissa = 1, Exponent = 1}
-	
+
 	----------------------------------------------------------------Line of seperation---------------------------------------------------------------
-	
+
 	BigNum.Denormalize(BigNumObject, displacement: number)
-	
+
 	Returns a "Denormalized" BigNumObject, adjusted to the displacement.
-	
+
 	In it's very core, it is no different from BigNum.Normalize.
-	
+
 	BigNum.new(11) --> {Mantissa = 11, Exponent = 0}
 	BigNum.Denormalize(BigNum.new(11), -1) --> {Mantissa = 1, Exponent = 1}
 	BigNum.Denormalize(BigNum.new(11), 1) --> {Mantissa = 110, Exponent = -1}
-	
+
 	----------------------------------------------------------------Line of seperation---------------------------------------------------------------
-	
+
 	BigNum.IntegerExponentiate(BigNumObject, tuple: BigNumObject)
-	
+
 	Exponentiation that only works for Integer. You can pass several BigNumObjects and it will compute all inside a
 	for loop.
-	
+
 	----------------------------------------------------------------Line of seperation---------------------------------------------------------------
-	
+
+	BigNum.Factorial(BigNumObject)
+
+	Calculate the factorial of the BigNumObject.
+
+	BigNum.Factorial(0) --> {Mantissa = 1, Exponent = 0}
+	BigNum.Factorial(1) --> {Mantissa = 1, Exponent = 0}
+	BigNum.Factorial(3) --> {Mantissa = 6, Exponent = 0}
+	BigNum.Factorial(5000000) --> {Mantissa = 1, Exponent = 0}
+
+
+	----------------------------------------------------------------Line of seperation---------------------------------------------------------------
+
 	BigNum.Raw(BigNumObject)
-	
+
 	Returns a string depicting the value in scientific notation. Basically the "tostring" global that works here.
 	Precision is by default 3 digits after the floating point.
-	
+
 	BigNum.Raw(BigNum.new(1)) --> "1e0"
 	BigNum.Raw(BigNum.new(1.1235)) --> "1.124e0"
 	BigNum.Raw(BigNum.new(1, 10)) --> "1e10"
-	
+
 	----------------------------------------------------------------Line of seperation---------------------------------------------------------------
-	
+
 	BigNum.Read(string)
-	
+
 	Returns a BigNumObject. Basically the "tonumber" global, except translated to fit here.
-	
+
 	BigNum.Read("1e1") --> {Mantissa = 1, Exponent = 1}
 	BigNum.Read("5e0") --> {Mantissa = 5, Exponent = 0}
-	
+
 	----------------------------------------------------------------Line of seperation---------------------------------------------------------------
-	
+
 	Undocumentated functions:
-	
+
 	Accepts one value only:
-	
+
 	BigNum.Floor
 	BigNum.Abs
 	BigNum.IsEven
 	BigNum.ln
-	
+
 	Accepts two value:
-	
+
 	BigNum.GreaterThan
 	BigNum.SmallerThan
-	
+
 	Accepts tuple:
-	
+
 	BigNum.Max
 	BigNum.Min
 	BigNum.Add
@@ -116,26 +128,26 @@
 	BigNum.Divide
 
 	-----------------------------------------------------------------End of Functions----------------------------------------------------------------
-	
+
 	---------------------------------------------------------------------Constants---------------------------------------------------------------------
-	
+
 	BigNum.Zero
 	BigNum.One
 	BigNum.Two
-	
+
 	BigNum.MinusOne
-	
-	Note: 
-	Despite named constants, I did not make them read-only. That said, you are not advised to change them, as they 
+
+	Note:
+	Despite named constants, I did not make them read-only. That said, you are not advised to change them, as they
 	are used in some functions, mainly BigNum.IntegerExponentiate.
 	They exist for efficiency reasons.
-	
+
 	You should also do the same if you plan on using the same value multiple times.
-	
+
 	---------------------------------------------------------------------Example---------------------------------------------------------------------
-	
+
 	Examples on adding a value by 5 repeatedly and stopping when the value is bigger than 40:
-	
+
 	Efficient:
 	local Value = BigNum.new(1)
 	local Addend = BigNum.new(5)
@@ -144,16 +156,16 @@
 		Value = BigNum.Add(Value, Addend)
 		if BigNum.GreaterThan(Value, StopAt) then break end
 	end
-	
+
 	Less efficient:
 	local Value = BigNum.new(1)
 	while 1 do
 		Value = BigNum.Add(Value, BigNum.new(5))
 		if BigNum.GreaterThan(Value, BigNum.new(4,1)) then break end
 	end
-	
+
 	While it achieves the same effect, the time complexity is much higher.
-	
+
 	TL;DR, treat BigNum.new like CFrame.new, if the same value is used multiple times, store it as a variable.
 ]]
 
@@ -270,7 +282,7 @@ BigNum.Divide = function(Dividend, ...)
 	return BigNum.Normalize(Quotient)
 end
 
-BigNum.Floor = function(Value)	
+BigNum.Floor = function(Value)
 	local Floor = BigNum.Denormalize(Value, (Value.Exponent < 14 and Value.Exponent or 14))
 
 	Floor.Mantissa = math.floor(Floor.Mantissa)
@@ -293,7 +305,7 @@ end
 
 BigNum.IntegerExponentiate = function(Base, ...)
 	local Base = BigNum.Clone(Base)
-	
+
 	for _, Exponent in next, {...} do
 		if BigNum.SmallerThan(Exponent, BigNum.Zero) then
 			Base = BigNum.Divide(BigNum.One, Base)
@@ -301,10 +313,10 @@ BigNum.IntegerExponentiate = function(Base, ...)
 		elseif BigNum.Equals(Exponent, BigNum.Zero) then
 			return BigNum.Clone(BigNum.One)
 		end
-		
+
 		local Factor = BigNum.Clone(BigNum.One)
 		Exponent = BigNum.Floor(Exponent)
-		
+
 		--Evil iterative exponentiation by squaring.lua
 		--Pretty efficient, not always the most, generally is.
 		while BigNum.GreaterThan(Exponent, BigNum.One) do
@@ -324,22 +336,31 @@ BigNum.IntegerExponentiate = function(Base, ...)
 	return Base
 end
 
+BigNum.Factorial = function(Value: number)
+	local Result = BigNum.Clone(BigNum.One)
+	while BigNum.GreaterThan(Value, BigNum.Zero) do
+		Result = BigNum.Multiply(Result, Value)
+		Value = BigNum.Subtract(Value, BigNum.One)
+	end
+	return Result
+end
+
 BigNum.Abs = function(Value)
 	local Value = BigNum.Clone(Value)
 	Value.Mantissa = math.abs(Value.Mantissa)
-	
+
 	return Value
 end
 
 BigNum.Min = function(Value, ...)
 	local Min = Value
-	
+
 	for _, Comparand in next, {...} do
 		if BigNum.SmallerThan(Comparand, Min) then
 			Min = Comparand
 		end
 	end
-	
+
 	return Min
 end
 
@@ -361,7 +382,9 @@ end
 
 BigNum.Read = function(Value: string)
 	local Separated = Value:split"e"
-	return BigNum.new(Separated[1], Separated[2]) 
+	return BigNum.new(Separated[1], Separated[2])
 end
+
+print(BigNum.Factorial(BigNum.new(5,5)))
 
 return BigNum
