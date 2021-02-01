@@ -1,13 +1,13 @@
 --[[
 	File: LPBN.lua
 
-	--Super low quality code.
+	--Low quality code.
 
 	--Ultra low precision. Hence LP. Works great(?) for games tho.
 	If you need precision see https://github.com/ennorehling/euler/blob/master/BigNum.lua
 
 	--Didn't use __eq  __add and the likes meta events.
-	Very inhuman but whatever. I don't care, add your own metamethods if you really want.
+	Very inhuman but whatever.
 
 	Notes:
 	--They do not mutate the value. Meaning:
@@ -384,7 +384,5 @@ BigNum.Read = function(Value: string)
 	local Separated = Value:split"e"
 	return BigNum.new(Separated[1], Separated[2])
 end
-
-print(BigNum.Factorial(BigNum.new(5,5)))
 
 return BigNum
