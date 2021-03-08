@@ -30,8 +30,8 @@ __equal = function(a, b)
             local Found = false
 
             for k2, v2 in next, b do
-                
-                if __equal(k2, k1) and __equal(v2, v1) and not UsedKeys[k2] then
+
+                if not UsedKeys[k2] and __equal(k2, k1) and __equal(v2, v1) then
 
                     UsedKeys[k2] = true
                     Found = true
