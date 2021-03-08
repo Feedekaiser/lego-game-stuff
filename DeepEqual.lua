@@ -8,45 +8,54 @@ local __equal
 
 __equal = function(a, b)
 
-    if a == b then
-        return true
-    end
+	if a == b then
+		return true
+	end
 
-    do
-        local Type = type(a)
-        if Type ~= type(b) or Type ~= 'table' then
-            return false
-        end
-    end
+	do
+		local Type = type(a)
+		if Type ~= type(b) or Type ~= 'table' then
+			return false
+		end
+	end
 
 
-    local UsedKeys = {}
-    for k1, v1 in next, a do
-        if b[k1] ~= nil then
-            if not __equal(v1, b[k1]) then
-                return false
-            end
-        else
-            local Found = false
+	local UsedKeys = {}
+	local Length_A = 0
+	for k1, v1 in next, a do
+		if b[k1] ~= nil then
+			if not __equal(v1, b[k1]) then
+				return false
+			end
+		else
+			local Found = false
 
-            for k2, v2 in next, b do
+			for k2, v2 in next, b do
 
-                if not UsedKeys[k2] and __equal(k2, k1) and __equal(v2, v1) then
+				if not UsedKeys[k2] and __equal(k2, k1) and __equal(v2, v1) then
 
-                    UsedKeys[k2] = true
-                    Found = true
+					UsedKeys[k2] = true
+					Found = true
 
-                    break
-                end
-            end
+					break
+				end
+			end
 
-            if not (Found and next(b) ~= nil) then
-                return false
-            end
-        end
-    end
+			if not (Found and next(b) ~= nil) then
+				return false
+			end
+		end
+		
+		Length_A = Length_A + 1
+	end
+	
+	local Length_B = 0
+	
+	for _ in next, b do
+		Length_B = Length_B + 1
+	end
 
-    return true
+	return Length_A == Length_B
 end
 
 return __equal
