@@ -5,7 +5,7 @@
 --// Ignores metatables, __eq is still called.
 
 local __equal
-    
+
 __equal = function(a, b)
 
     if a == b then
