@@ -11,8 +11,6 @@ __equal = function(a, b)
     if a == b then
         return true
     end
-    
-    
 
     do
         local Type = type(a)
@@ -20,7 +18,8 @@ __equal = function(a, b)
             return false
         end
     end
-    
+
+
     local UsedKeys = {}
     for k1, v1 in next, a do
         if b[k1] ~= nil then
@@ -29,14 +28,14 @@ __equal = function(a, b)
             end
         else
             local Found = false
-            
+
             for k2, v2 in next, b do
                 
                 if __equal(k2, k1) and __equal(v2, v1) and not UsedKeys[k2] then
-                    
+
                     UsedKeys[k2] = true
                     Found = true
-                    
+
                     break
                 end
             end
@@ -46,7 +45,7 @@ __equal = function(a, b)
             end
         end
     end
-    
+
     return true
 end
 
