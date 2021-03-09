@@ -1,5 +1,6 @@
 local tostring = tostring
 local floor    = math.floor
+local abs      = math.abs
 
 local Characters = {
 	[ 0] = "0";
