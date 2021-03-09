@@ -14,14 +14,15 @@ __equal = function(a, b)
 
 	do
 		local Type = type(a)
-		if Type ~= type(b) or Type ~= 'table' then
+		if Type ~= 'table' or Type ~= type(b) then
 			return false
 		end
 	end
 
 
 	local UsedKeys = {}
-	local Length_A = 0
+	local Size_A = 0
+	
 	for k1, v1 in next, a do
 		if b[k1] ~= nil then
 			if not __equal(v1, b[k1]) then
@@ -46,16 +47,16 @@ __equal = function(a, b)
 			end
 		end
 		
-		Length_A = Length_A + 1
+		Size_A = Size_A + 1
 	end
 	
-	local Length_B = 0
+	local Size_B = 0
 	
 	for _ in next, b do
-		Length_B = Length_B + 1
+		Size_B = Size_B + 1
 	end
 
-	return Length_A == Length_B
+	return Size_A == Size_B
 end
 
 return __equal
