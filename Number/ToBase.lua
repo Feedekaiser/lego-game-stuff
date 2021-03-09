@@ -29,18 +29,18 @@ local Characters = {
 }
 
 return function(Number, Base) 
-    local Negative = Number < 0
+	local Negative = Number < 0
 
 	Number = abs(Number)
 
-    if Number < Base then return tostring(Number) end
+	if Number < Base then return tostring(Number) end
 
-    local Result = ""
+	local Result = ""
 
-    repeat
-        Result = Characters[floor(Number % Base)] .. Result
-        Number = floor(Number / Base)
-    until Number == 0
+	repeat
+		Result = Characters[floor(Number % Base)] .. Result
+		Number = floor(Number / Base)
+	until Number == 0
 
-    return Negative and "-" .. Result or Result
+	return Negative and "-" .. Result or Result
 end
