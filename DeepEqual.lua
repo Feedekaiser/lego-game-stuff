@@ -42,7 +42,7 @@ __equal = function(a, b)
 				end
 			end
 
-			if not (Found and next(b) ~= nil) then
+			if not Found then
 				return false
 			end
 		end
