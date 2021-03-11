@@ -1,5 +1,3 @@
---!strict
-
 --// File:    OpenSimplex3D.lua
 
 --// Credits to " https://github.com/KdotJPG/OpenSimplex2 ", this is merely an implementation in lua.
@@ -54,11 +52,10 @@ local BCC = function(xr, yr, zr)
 	local Value = 0
 
 	if LatticePoint then
-		local dxr = xri + LatticePoint.dxr
-		local dyr = yri + LatticePoint.dyr
-		local dzr = zri + LatticePoint.dzr
-
 		while LatticePoint do
+			local dxr = xri + LatticePoint.dxr
+			local dyr = yri + LatticePoint.dyr
+			local dzr = zri + LatticePoint.dzr
 			local attn = 0.75 - (dxr ^ 2) - (dyr ^ 2) - (dzr ^ 2)
 
 			if attn < 0 then
@@ -100,12 +97,12 @@ function Noise.Seed(Seed) --// undefined behavior for non integers that are not 
 		do
 			local normal = i + 1
 			r = modf((Seed + 31) % normal) --// round towards 0.
-			
+
 			if r < 0 then
 				r += normal
 			end
 		end
-		
+
 		do
 			local rand = source[r]
 			perm[i] = rand
