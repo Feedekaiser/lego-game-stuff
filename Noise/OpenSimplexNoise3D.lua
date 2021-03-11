@@ -59,7 +59,7 @@ local BCC = function(xr, yr, zr)
 		local dzr = zri + LatticePoint.dzr
 
 		while LatticePoint do
-			local attn : number = 0.75 - (dxr ^ 2) - (dyr ^ 2) - (dzr ^ 2)
+			local attn 0.75 - (dxr ^ 2) - (dyr ^ 2) - (dzr ^ 2)
 
 			if attn < 0 then
 				LatticePoint = LatticePoint.NextOnFailure
