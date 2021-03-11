@@ -51,21 +51,19 @@ local BCC = function(xr, yr, zr)
 
 	local Value = 0
 
-	if LatticePoint then
-		while LatticePoint do
-			local dxr = xri + LatticePoint.dxr
-			local dyr = yri + LatticePoint.dyr
-			local dzr = zri + LatticePoint.dzr
-			local attn = 0.75 - (dxr ^ 2) - (dyr ^ 2) - (dzr ^ 2)
+	while LatticePoint do
+		local dxr = xri + LatticePoint.dxr
+		local dyr = yri + LatticePoint.dyr
+		local dzr = zri + LatticePoint.dzr
+		local attn = 0.75 - (dxr ^ 2) - (dyr ^ 2) - (dzr ^ 2)
 
-			if attn < 0 then
-				LatticePoint = LatticePoint.NextOnFailure
-			else
-				local Grad = Grad_Lookup[bit_xor(perm[bit_xor(perm[bit_and(xrb + LatticePoint.xrv, 2047)],bit_and(yrb + LatticePoint.yrv, 2047))],bit_and(zrb + LatticePoint.zrv, 2047))]
-				Value += (attn ^ 4) * (Grad.dx * dxr + Grad.dy * dyr + Grad.dz * dzr)
+		if attn < 0 then
+			LatticePoint = LatticePoint.NextOnFailure
+		else
+			local Grad = Grad_Lookup[bit_xor(perm[bit_xor(perm[bit_and(xrb + LatticePoint.xrv, 2047)],bit_and(yrb + LatticePoint.yrv, 2047))],bit_and(zrb + LatticePoint.zrv, 2047))]
+			Value += (attn ^ 4) * (Grad.dx * dxr + Grad.dy * dyr + Grad.dz * dzr)
 
-				LatticePoint = LatticePoint.NextOnSuccess
-			end
+			LatticePoint = LatticePoint.NextOnSuccess
 		end
 	end
 
