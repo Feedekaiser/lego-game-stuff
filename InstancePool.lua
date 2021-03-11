@@ -143,7 +143,6 @@ end
 
 function PoolBlueprint:Refill(Amount)
 	local CreateMethod = self.__CreateMethod
-	local Template     = self.__Template
 	local Pool         = self.__Pool
 	local Start        = #Pool + 1
 
