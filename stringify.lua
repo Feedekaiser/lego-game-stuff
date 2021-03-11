@@ -15,7 +15,7 @@ stringify = function(v,spaces, usesemicolon, depth)
 	local s = "{"
 	
 	for k, x in next, v do
-		s = s..("\n%s\[%s\] = %s%s"):format(space,type(k)=='number'and tostring(k)or('"%s"'):format(tostring(k)), stringify(x, spaces, usesemicolon, depth+1), sep)
+		s = s..("\n%s[%s] = %s%s"):format(space,type(k)=='number'and tostring(k)or('"%s"'):format(tostring(k)), stringify(x, spaces, usesemicolon, depth+1), sep)
 	end
 	
 	return ("%s\n%s}"):format(s:sub(1,-2), space:sub(1, -spaces-1))
