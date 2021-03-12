@@ -100,11 +100,10 @@ local PoolBlueprint = {}
 PoolBlueprint.__index = PoolBlueprint
 
 function PoolBlueprint:Get()
-	local Reference
-
 	local Pool   = self.__Pool
 	local Length = #Pool
-	Reference = Pool[Length]
+	local Reference = Pool[Length]
+
 	Pool[Length] = nil
 
 	return Reference or self.__CreateMethod()
