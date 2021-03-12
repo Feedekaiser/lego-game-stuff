@@ -101,18 +101,13 @@ PoolBlueprint.__index = PoolBlueprint
 
 function PoolBlueprint:Get()
 	local Reference
-	
+
 	local Pool   = self.__Pool
 	local Length = #Pool
 	Reference = Pool[Length]
-
-	if not Reference then
-		return self.__CreateMethod()
-	end
-
 	Pool[Length] = nil
 
-	return Reference
+	return Reference or self.__CreateMethod()
 end
 
 function PoolBlueprint:Return(Instance)
