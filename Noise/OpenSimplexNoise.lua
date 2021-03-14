@@ -38,7 +38,6 @@ end
 --// Note that 24 bit integers are used instead of 64 bit due to lua number types complications.
 local INT_POSITIVE_LIMIT_24   =  8388607
 local INT_NEGATIVE_LIMIT_24   = -8388608
-local INT_NEGATIVE_COMPLEMENT = -8388607
 
 local PMASK = 2047
 
