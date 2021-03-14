@@ -95,9 +95,9 @@ local Base2D = function(xs, ys)
 		local attn = 0.6666666666666666 - (dx ^ 2) - (dy ^ 2)
 
 		if attn > 0 then
-            local Grad = Grad2D[bit_xor(Permutation[bit_and(xsb + LatticePoint.xsv, PMASK)], bit_and(ysb + LatticePoint.ysv, PMASK))]
+			local Grad = Grad2D[bit_xor(Permutation[bit_and(xsb + LatticePoint.xsv, PMASK)], bit_and(ysb + LatticePoint.ysv, PMASK))]
 
-            Result = Result + (attn ^ 4) * (Grad.dx * dx + Grad.dy * dy)
+			Result = Result + (attn ^ 4) * (Grad.dx * dx + Grad.dy * dy)
 		end
 	end
 
@@ -155,7 +155,7 @@ function Noise.Seed(Seed) --// undefined behavior for non integers that are not 
 		elseif Seed <= INT_NEGATIVE_LIMIT_24 then
 			Seed = (Seed % INT_UNSIGNED_LIMIT_24) + INT_UNSIGNED_LIMIT_24
 		end
-        --// End of voodoo magic
+		--// End of voodoo magic
 
 		local r
 
@@ -188,21 +188,21 @@ end
 function Noise.XBeforeY2D(x, y)
 	local xx = x * 0.7071067811865476
 	local yy = y * 1.224744871380249
-	
+
 	return Base2D(yy + xx, yy - xx)
 end
 
 function Noise.Classic3D(x, y, z)
 	local r = 0.6666666666666666 * (x + y + z)
 
-	return noise3_BCC(r - x, r - y, r - z)
+	return Base3D(r - x, r - y, r - z)
 end
 
 function Noise.XYBeforeZ3D(x, y, z)
 	local xy = x + y
 	local ss = (xy * -0.211324865405187) - (z * 0.577350269189626)
 
-    return Base3D(x + ss, y + ss, xy * 0.577350269189626 + zz)
+	return Base3D(x + ss, y + ss, xy * 0.577350269189626 + zz)
 end
 
 function Noise.XZBeforeY3D(x, y, z) --// XZBeforeY
