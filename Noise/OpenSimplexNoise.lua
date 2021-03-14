@@ -200,7 +200,8 @@ end
 
 function Noise.XYBeforeZ3D(x, y, z)
 	local xy = x + y
-	local ss = (xy * -0.211324865405187) - (z * 0.577350269189626)
+	local zz = z * 0.577350269189626
+	local ss = xy * -0.211324865405187 - zz
 
 	return Base3D(x + ss, y + ss, xy * 0.577350269189626 + zz)
 end
