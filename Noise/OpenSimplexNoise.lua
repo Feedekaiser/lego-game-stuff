@@ -97,7 +97,7 @@ local Base2D = function(xs, ys)
 		local dx = xi + LatticePoint.dx
 		local dy = yi + LatticePoint.dy
 
-		local attn = 0.6666666666666666 - (dx * dy) - (dy * dy)
+		local attn = 0.6666666666666666 - (dx * dx) - (dy * dy)
 
 		if attn > 0 then
 			local Grad = Grad2D[bit_xor(Permutation[bit_and(xsb + LatticePoint.xsv, PMASK)], bit_and(ysb + LatticePoint.ysv, PMASK))]
