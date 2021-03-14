@@ -179,8 +179,6 @@ function Noise.Seed(Seed) --// undefined behavior for non integers that are not 
 
 		Hash[r] = Hash[i]
 	end
-	
-	print(Hash[1], Permutation[1])
 end
 
 function Noise.Classic2D(x, y)
