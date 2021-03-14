@@ -36,9 +36,9 @@ end
 
 --// Constants
 --// Note that 24 bit integers are used instead of 64 bit due to lua number types complications.
-local INT_UNSIGNED_LIMIT_24 =  16777216
-local INT_POSITIVE_LIMIT_24 =   8388607
-local INT_NEGATIVE_LIMIT_24 =  -8388608
+local INT_POSITIVE_LIMIT_24   =  8388607
+local INT_NEGATIVE_LIMIT_24   = -8388608
+local INT_NEGATIVE_COMPLEMENT = -8388607
 
 local PMASK = 2047
 
@@ -151,9 +151,9 @@ function Noise.Seed(Seed) --// undefined behavior for non integers that are not 
 
 		--// Simulate integer overflow with voodoo magic.
 		if Seed >= INT_POSITIVE_LIMIT_24 then
-			Seed = (Seed % INT_UNSIGNED_LIMIT_24) - INT_UNSIGNED_LIMIT_24
+			Seed = (Seed % INT_POSITIVE_LIMIT_24) - INT_POSITIVE_LIMIT_24
 		elseif Seed <= INT_NEGATIVE_LIMIT_24 then
-			Seed = (Seed % INT_UNSIGNED_LIMIT_24) + INT_UNSIGNED_LIMIT_24
+			Seed = (Seed % INT_POSITIVE_LIMIT_24) + INT_POSITIVE_LIMIT_24
 		end
 		--// End of voodoo magic
 
@@ -175,9 +175,12 @@ function Noise.Seed(Seed) --// undefined behavior for non integers that are not 
 
 			Permutation[i] = rand
 		end
+		
 
 		Hash[r] = Hash[i]
 	end
+	
+	print(Hash[1], Permutation[1])
 end
 
 function Noise.Classic2D(x, y)
