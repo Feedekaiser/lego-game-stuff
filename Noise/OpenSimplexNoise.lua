@@ -180,7 +180,7 @@ function Noise.Seed(Seed) --// undefined behavior for non integers that are not 
 	end
 end
 
-function Noise.Classic2D(x, y) --// Standard
+function Noise.Classic2D(x, y)
 	local s = 0.366025403784439 * (x + y)
 	return Base2D(x + s, y + s)
 end
@@ -205,7 +205,7 @@ function Noise.XYBeforeZ3D(x, y, z)
 	return Base3D(x + ss, y + ss, xy * 0.577350269189626 + zz)
 end
 
-function Noise.XZBeforeY3D(x, y, z) --// XZBeforeY
+function Noise.XZBeforeY3D(x, y, z)
 	local xz = x + z
 	local yy = y * 0.577350269189626
 
