@@ -92,7 +92,7 @@ local Base2D = function(xs, ys)
 		local dx = xi + LatticePoint.dx
 		local dy = yi + LatticePoint.dy
 
-		local attn = .6666666666666666 - (dx ^ 2) - (dy ^ 2)
+		local attn = 0.6666666666666666 - (dx ^ 2) - (dy ^ 2)
 
 		if attn > 0 then
             local Grad = Grad2D[bit_xor(Permutation[bit_and(xsb + LatticePoint.xsv, PMASK)], bit_and(ysb + LatticePoint.ysv, PMASK))]
@@ -193,7 +193,7 @@ function Noise.XBeforeY2D(x, y)
 end
 
 function Noise.Classic3D(x, y, z)
-	local r = .6666666666666666 * (x + y + z)
+	local r = 0.6666666666666666 * (x + y + z)
 
 	return noise3_BCC(r - x, r - y, r - z)
 end
