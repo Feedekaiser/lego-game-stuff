@@ -62,8 +62,8 @@ local arr = {
 }
 local N3 = 0.2781926117527186
 for _, v in next, arr do
-	for k in next, v do
-		v[k] /= N3
+	for k,x in next, v do
+		v[k] = x/N3
 	end
 end
 

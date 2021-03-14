@@ -36,8 +36,8 @@ local arr = {
 
 local lk = {}
 for _,v in next, arr do
-	for k in next, v do
-		v[k] /= 0.05481866495625118
+	for k,x in next, v do
+		v[k] = x/ 0.05481866495625118
 	end
 end
 
