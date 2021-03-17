@@ -36,6 +36,12 @@
 	The instance is added to the available pool.
 	
 	--------------------------------------------------------------------------------------------------------------------------------
+
+	<void> Pool:MassReturn(<Array> {[any] : instance})
+	
+	Similar to Pool:Return, but more optimized for large amounts.
+	
+	--------------------------------------------------------------------------------------------------------------------------------
 	
 	<void> Pool:Destroy(void)
 	
@@ -114,6 +120,16 @@ function PoolBlueprint:Return(Instance)
 
 	local Pool = self.__Pool
 	Pool[#Pool + 1] = Instance
+end
+
+function PoolBlueprint:MassReturn(Array)
+	local ReturnMethod = self.__ReturnMethod
+	local Pool = self.__Pool
+	
+	for _, Instance in next, Array do
+		ReturnMethod(Instance)
+		Pool[#Pool + 1] = Instance
+	end
 end
 
 function PoolBlueprint:Destroy()
