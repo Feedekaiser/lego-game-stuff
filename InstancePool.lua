@@ -100,19 +100,16 @@
 	print(err) --> something along the lines of attemt to get the length of nil.
 ]]
 local setmetatable  = setmetatable
+local pop           = table.remove
 local InstancePool  = {}
 local PoolBlueprint = {}
 
 PoolBlueprint.__index = PoolBlueprint
 
 function PoolBlueprint:Get()
-	local Pool   = self.__Pool
-	local Length = #Pool
-	local Reference = Pool[Length]
+	local Pool = self.__Pool
 
-	Pool[Length] = nil
-
-	return Reference or self.__CreateMethod()
+	return pop(Pool, #Pool) or self.__CreateMethod()
 end
 
 function PoolBlueprint:Return(Instance)
