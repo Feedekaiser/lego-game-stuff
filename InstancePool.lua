@@ -31,13 +31,13 @@
 
 	<void> Pool:MassReturn(<Array> {[any] : instance})
 
-	Similar to Pool:Return, but more optimized for large amounts.
+	Similar to Pool.Return, but more optimized for large amounts.
 
 	--------------------------------------------------------------------------------------------------------------------------------
 
 	<void> Pool:Destroy(void)
 
-	Destroys the pool.
+	Destroys the pool, along with the instances in it.
 	Essentially becomes an empty table with metamethods attached.
 ]]
 
