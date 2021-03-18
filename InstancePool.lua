@@ -1,40 +1,44 @@
 --[[
 	<return_type> function_name (<argument_type> argument_name)
 	--------------------------------------------------------------------------------------------------------------------------------
-	
+
 	<Pool> InstancePool.new(<integer> amount, <function> Constructor, <function> Destructor)
-	
+
 	Returns a Pool object prefilled with amount of instances.
-	
-	The Constructor is called for instance creation. It expects the instances to be returned.
+
+	The Constructor is called for instance creation. It expects the instance to be returned.
 	The Destructor is called, passing the instance returned as a parameter.
-	
-	See example for example usage.
-	
+
 	--------------------------------------------------------------------------------------------------------------------------------
-	
+
 	<void> Pool:Refill(<integer> amount)
 
 	Add amount of instances to the pool.
-	
+
 	--------------------------------------------------------------------------------------------------------------------------------
-	
+
 	<Instance> Pool:Get(void)
-	
+
 	Returns an instance. If none exist a newly created one is returned instead.
-	
+
 	--------------------------------------------------------------------------------------------------------------------------------
-	
+
 	<void> Pool:Return(<Instance> instance)
-	
+
 	The instance is added to the available pool.
-	
+
 	--------------------------------------------------------------------------------------------------------------------------------
-	
+
+	<void> Pool:MassReturn(<Array> {[any] : instance})
+
+	Similar to Pool:Return, but more optimized for large amounts.
+
+	--------------------------------------------------------------------------------------------------------------------------------
+
 	<void> Pool:Destroy(void)
-	
+
 	Destroys the pool.
-	Essentially becomes an empty table with metamethods attached ( that will error when called ).
+	Essentially becomes an empty table with metamethods attached.
 ]]
 
 local setmetatable  = setmetatable
@@ -45,7 +49,7 @@ local PoolBlueprint = {}
 PoolBlueprint.__index = PoolBlueprint
 
 function PoolBlueprint:Get()
-	return pop(self.__Pool) or self.__CreateMethod()
+	return pop(self) or self.__CreateMethod()
 end
 
 function PoolBlueprint:Return(Instance)
