@@ -42,14 +42,22 @@
 ]]
 
 local setmetatable  = setmetatable
-local pop           = table.remove
+local next          = next
 local InstancePool  = {}
 local PoolBlueprint = {}
 
 PoolBlueprint.__index = PoolBlueprint
 
 function PoolBlueprint:Get()
-	return pop(self) or self.__CreateMethod()
+	local Pool     = self.__Pool
+	local Instance = next(Pool) 
+	
+	if Instance then
+		Pool[Instance] = nil
+		return Instance
+	end
+	
+	return self.__CreateMethod()
 end
 
 function PoolBlueprint:Return(Instance)
