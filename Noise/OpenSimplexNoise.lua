@@ -60,10 +60,6 @@ local bit_and = bit32.band
 local bit_or  = bit32.bor
 local bit_xor = bit32.bxor
 
-local FastRound = function(x)
-	return x >= 0.5 and 1 or 0
-end
-
 local Base2D = function(xs, ys)
 	local xsb = floor(xs)
 	local ysb = floor(ys)
@@ -119,7 +115,7 @@ local Base3D = function(xr, yr, zr)
 	local yri = yr - yrb
 	local zri = zr - zrb
 
-	local LatticePoint = Lattice3D_Lookup[bit_or(FastRound(xri), FastRound(yri) * 2, FastRound(zri) * 4)] --// Left shifts. Multiplying seems to be ~30 % faster than using shifts.
+	local LatticePoint = Lattice3D_Lookup[bit_or(xri >= .5 and 1 or 0, yri >= .5 and 2 or 0, zri >= .5 and 4 or 0)] --// Left shifts. Multiplying seems to be ~30 % faster than using shifts.
 
 	local Value = 0
 
