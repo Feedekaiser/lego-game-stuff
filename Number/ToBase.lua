@@ -1,6 +1,5 @@
 local tostring = tostring
 local floor    = math.floor
-local abs      = math.abs
 
 local Characters = {
 	[ 0] = "0";
@@ -20,24 +19,18 @@ local Characters = {
 	[14] = "E";
 	[15] = "F";
 	[16] = "G";
-	[17] = "H";
-	[18] = "I";
-	[19] = "J";
-	[20] = "K";
-	[21] = "L";
-	[22] = "M";
-	[23] = "N";
+	--// add more if needed.
 }
 
-return function(Number, Base) 
-	local Negative = Number < 0
+return function(Number, Base)
+	local Negative
 
-	Number = abs(Number)
-
-	if Number < Base then return tostring(Number) end
+	if Number < 0 then
+		Negative = true
+		Number = -Number
+	end
 
 	local Result = ""
-
 	repeat
 		Result = Characters[floor(Number % Base)] .. Result
 		Number = floor(Number / Base)
