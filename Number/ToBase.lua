@@ -1,4 +1,4 @@
-local floor    = math.floor
+local floor = math.floor
 
 local Characters = {
 	[ 0] = "0";
