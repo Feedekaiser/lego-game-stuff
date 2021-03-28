@@ -1,4 +1,3 @@
-local tostring = tostring
 local floor    = math.floor
 
 local Characters = {
