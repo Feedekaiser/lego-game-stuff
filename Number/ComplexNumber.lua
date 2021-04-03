@@ -1,3 +1,11 @@
+--// <Complex> Complex.new(<number> re, <number> im)
+--// returns a Complex number, where re is the real part, and im is the complex part.
+--// Every basic mathematical operation except for modulus (including exponentation) is included.
+--// Complex is an array containing both the real and complex part. The zero-th element is the real part, and the 1st element is the complex part.
+
+--// <number> Complex.abs(<Complex> z)
+--// returns the absolute / modulus of the complex number.
+
 local Complex = {}
 
 local new = function(r, c)
