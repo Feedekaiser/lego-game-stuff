@@ -1,10 +1,10 @@
---// <Complex> Complex.new(<number> re, <number> im)
+--// <Complex> Complex.new (<number> re, <number> im)
 --// returns a Complex number, where re is the real part, and im is the complex part.
---// Every basic mathematical operation except for modulus (including exponentation) is included.
+--// Every basic mathematical operation except for modulo (including exponentation with imaginary exponents) is included.
 --// Complex is an array containing both the real and complex part. The zero-th element is the real part, and the 1st element is the complex part.
 
---// <number> Complex.abs(<Complex> z)
---// returns the absolute / modulus of the complex number.
+--// <number> Complex.abs (<Complex> z)
+--// returns the absolute / modulus of the complex number. (sqrt(a^2 + b^2))
 
 local Complex = {}
 
@@ -37,13 +37,15 @@ end
 
 function Complex.__mul(c0, c1)
 	local a,b,c,d = c0[0],c0[1],c1[0],c1[1]
+
 	return new(a*c - b*d, a*d + b*c)
 end
 
 function Complex.__div(c0, c1)
 	local a,b,c,d = c0[0],c0[1],c1[0],c1[1]
 	local div = c*c + d*d
-	return new((a*c+b*d)/div, (b*c-a*d)/div)
+
+	return new((a*c + b*d)/div, (b*c - a*d)/div)
 end
 
 function Complex.__pow(z, w)
