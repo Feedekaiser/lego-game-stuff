@@ -1,3 +1,19 @@
+--[[
+	<Complex> Complex.new(<Number> re, <Number> im)
+	returns a Complex object. Essentially an array where the 0th element is the real part, and the 1st element is the complex part.
+
+	<Number> Complex.abs(<Complex> z)
+	returns the modulus (absolute value) of z.
+
+	Addition, subtraction, unary minus, multiplication, division and exponeniation are implemented as metamethods that expects the other operand to be a Complex object.
+	This includes complex exponents.
+
+
+	Note: The __pow metamethod is not very optimized for raising numbers to a real exponents. I cannot add check. However, it should still be relatively quick
+	UNLESS you are using this for Mandelbrot/Julia sets and raising to a real exponent, in which case, I will recommend forking the __pow metamethod itself for faster speed.
+
+	__tostring metamethod is implemented.
+]]
 local exp = math.exp
 local sin = math.sin
 local cos = math.cos
@@ -35,12 +51,14 @@ end
 
 function Complex.__mul(z, w)
 	local zr, zi, wr, wi = z[0], z[1], w[0], w[1]
+
 	return new(zr * wr - zi * wi, zr * wi + zi * wr)
 end
 
 function Complex.__div(z, w)
 	local zr, zi, wr, wi = z[0], z[1], w[0], w[1]
 	local div = wr * wr + wi * wi
+
 	return new((zr * wr + zi * wi)/div, (zi * wr - zr * wi)/div)
 end
 
