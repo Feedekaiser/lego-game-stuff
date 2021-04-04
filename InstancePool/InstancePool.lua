@@ -40,59 +40,59 @@
 	Destroys the pool, along with the instances in it.
 	Essentially becomes an empty table with metamethods attached.
 ]]
-
+local tableremove   = table.remove
+local tableinsert   = table.insert
 local setmetatable  = setmetatable
 local next          = next
 local InstancePool  = {}
-local PoolBlueprint = {}
 
-PoolBlueprint.__index = PoolBlueprint
+InstancePool.__index = InstancePool
 
-function PoolBlueprint:Get()
-	return table.remove(self.__Pool) or self.__CreateMethod()
+function InstancePool:Get()
+	return tableremove(self[1]) or self[2]
 end
 
-function PoolBlueprint:Return(Instance)
-	self.__ReturnMethod(Instance)
-	table.insert(self.__Pool, Instance)
+function InstancePool:Return(Instance)
+	self[3](Instance)
+	tableinsert(self[1], Instance)
 end
 
-function PoolBlueprint:MassReturn(Array)
-	local ReturnMethod = self.__ReturnMethod
-	local Pool         = self.__Pool
+function InstancePool:MassReturn(Array)
+	local ReturnMethod = self[3]
+	local Pool         = self[1]
 
 	for _, Instance in next, Array do
 		ReturnMethod(Instance)
-		table.insert(Pool, Instance)
+		tableinsert(Pool, Instance)
 	end
 end
 
-function PoolBlueprint:Destroy()
+function InstancePool:Destroy()
 
 	do
-		local Pool = self.__Pool
+		local Pool = self[1]
 		for i, Instance in next, Pool do
 			Pool[i] = nil
 			Instance:Destroy()
 		end
 	end
 
-	self.__CreateMethod = nil
-	self.__ReturnMethod = nil
-	self.__Pool         = nil
+	self[1] = nil
+	self[2] = nil
+	self[3] = nil
 end
 
-function PoolBlueprint:Refill(Amount)
-	local CreateMethod = self.__CreateMethod
-	local Pool         = self.__Pool
+function InstancePool:Refill(Amount)
+	local CreateMethod = self[2]
+	local Pool         = self[1]
 
 	for _ = 1, Amount do
-		table.insert(Pool, CreateMethod())
+		tableinsert(Pool, CreateMethod())
 	end
 end
 
 function InstancePool.new(Amount, CreatMethod, ReturnMethod)
-	local self = setmetatable({__Pool = {}, __CreateMethod = CreatMethod, __ReturnMethod = ReturnMethod}, PoolBlueprint)
+	local self = setmetatable({{}, CreatMethod, ReturnMethod}, InstancePool)
 
 	self:Refill(Amount)
 
