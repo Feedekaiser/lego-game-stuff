@@ -49,7 +49,7 @@ local InstancePool  = {}
 InstancePool.__index = InstancePool
 
 function InstancePool:Get()
-	return tableremove(self[1]) or self[2]
+	return tableremove(self[1]) or self[2]()
 end
 
 function InstancePool:Return(Instance)
