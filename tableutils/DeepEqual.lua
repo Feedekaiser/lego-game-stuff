@@ -29,20 +29,20 @@ __equal = function(a, b)
 				return false
 			end
 		else
-			local Found = false
+			local NotFound = true
 
 			for k2, v2 in next, b do
 
 				if not UsedKeys[k2] and __equal(k2, k1) and __equal(v2, v1) then
 
 					UsedKeys[k2] = true
-					Found = true
+					NotFound = false
 
 					break
 				end
 			end
 
-			if not Found then
+			if NotFound then
 				return false
 			end
 		end
