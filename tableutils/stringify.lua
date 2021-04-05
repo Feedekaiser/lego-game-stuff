@@ -1,24 +1,27 @@
 local stringify
 
-stringify = function(v,spaces, usesemicolon, depth)
-	if type(v) ~= 'table' then
-		return tostring(v)
-	elseif not next(v) then
+stringify = function(v, usesemicolon, depth)
+	if next(v) == nil then --// might be using [false] as keys.
 		return '{}'
 	end
 
-	spaces = spaces or 4
 	depth = depth or 1
 
-	local space = (" "):rep(depth*spaces)
+	local tabs = ("\t"):rep(depth)
 	local sep = usesemicolon and ";" or ","
-	local s = "{"
+	local s = {"{"}
+	local n = 2
 
 	for k, x in next, v do
-		s = s..("\n%s[%s] = %s%s"):format(space,type(k)=='number'and tostring(k)or('"%s"'):format(tostring(k)), stringify(x, spaces, usesemicolon, depth+1), sep)
+		s[n] = ("\n%s[%s] = %s%s"):format(tabs,type(k)=='number' and tostring(k) or ('"%s"'):format(tostring(k)),type(x) == 'table' and stringify(x, usesemicolon, depth+1) or tostring(v), sep)
+		n = n + 1
 	end
 
-	return ("%s\n%s}"):format(s:sub(1,-2), space:sub(1, -spaces-1))
+  	local r = n - 1
+	s[r] = s[r]:sub(1, -2)
+	s[n] = ("\n%s}"):format(tabs:sub(1, -2))
+
+	return table.concat(s)
 end
 
 return stringify
