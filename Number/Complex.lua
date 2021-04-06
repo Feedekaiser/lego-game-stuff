@@ -64,9 +64,10 @@ end
 
 function Complex.__pow(z, w)
 	local exponent = w * new(log(abs(z)), atan2(z[1], z[0]))
-	local re, im = exponent[0], exponent[1]
+	local exp = exp(exponent[0])
+	local im = exponent[1]
 
-	return new(exp(re) * cos(im), exp(re) * sin(im))
+	return new(exp * cos(im), exp * sin(im))
 end
 
 return Complex
