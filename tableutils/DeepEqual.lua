@@ -15,7 +15,7 @@ __equal = function(a, b)
 	do
 		local Type = type(a)
 		if Type ~= 'table' or Type ~= type(b) then
-			return false
+			return
 		end
 	end
 
@@ -26,7 +26,7 @@ __equal = function(a, b)
 	for k1, v1 in next, a do
 		if b[k1] ~= nil then
 			if not __equal(v1, b[k1]) then
-				return false
+				return
 			end
 		else
 			local NotFound = true
@@ -43,7 +43,7 @@ __equal = function(a, b)
 			end
 
 			if NotFound then
-				return false
+				return
 			end
 		end
 		
