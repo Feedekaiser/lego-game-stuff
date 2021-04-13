@@ -13,7 +13,7 @@ stringify = function(v, usesemicolon, depth)
 	local n = 2
 
 	for k, x in next, v do
-		s[n] = ("\n%s[%s] = %s%s"):format(tabs, type(k) == 'number' and tostring(k) or ('"%s"'):format(tostring(k)), type(x) == 'table' and stringify(x, usesemicolon, depth + 1) or tostring(v), sep)
+		s[n] = ("\n%s[%s] = %s%s"):format(tabs, type(k) == 'number' and tostring(k) or ('"%s"'):format(tostring(k)), type(x) == 'table' and stringify(x, usesemicolon, depth + 1) or tostring(x), sep)
 		n = n + 1
 	end
 
