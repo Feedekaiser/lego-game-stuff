@@ -23,26 +23,26 @@ local atan2 = math.atan2
 local Complex = {}
 
 local new = function(re, im)
-  return setmetatable({[0] = re, [1] = im}, Complex)
+  return setmetatable({re; im}, Complex)
 end
 
 local abs = function(z)
-	return (z[0] ^ 2 + z[1] ^ 2) ^ 0.5
+	return (z[1] ^ 2 + z[2] ^ 2) ^ 0.5
 end
 
 Complex.abs = abs
 Complex.new = new
 
 function Complex.__tostring(z)
-	return z[1] >= 0 and ("%.4f%s%.4fi"):format(z[0], "+", z[1]) or ("%.4f%.4fi"):format(z[0], z[1])
+	return z[2] >= 0 and ("%.4f%s%.4fi"):format(z[1], "+", z[2]) or ("%.4f%.4fi"):format(z[1], z[2])
 end
 
 function Complex.__unm(z)
-	return new(-z[0], -z[1])
+	return new(-z[1], -z[2])
 end
 
 function Complex.__add(z, w)
-	return new(z[0] + w[0], z[1] + w[1])
+	return new(z[1] + w[1], z[2] + w[2])
 end
 
 function Complex.__sub(z, w)
@@ -50,22 +50,22 @@ function Complex.__sub(z, w)
 end
 
 function Complex.__mul(z, w)
-	local zr, zi, wr, wi = z[0], z[1], w[0], w[1]
+	local zr, zi, wr, wi = z[1], z[2], w[1], w[2]
 
 	return new(zr * wr - zi * wi, zr * wi + zi * wr)
 end
 
 function Complex.__div(z, w)
-	local zr, zi, wr, wi = z[0], z[1], w[0], w[1]
+	local zr, zi, wr, wi = z[1], z[2], w[1], w[2]
 	local div = wr * wr + wi * wi
 
 	return new((zr * wr + zi * wi)/div, (zi * wr - zr * wi)/div)
 end
 
 function Complex.__pow(z, w)
-	local exponent = w * new(log(abs(z)), atan2(z[1], z[0]))
-	local exp = exp(exponent[0])
-	local im = exponent[1]
+	local exponent = w * new(log(abs(z)), atan2(z[2], z[1]))
+	local exp = exp(exponent[1])
+	local im = exponent[2]
 
 	return new(exp * cos(im), exp * sin(im))
 end
