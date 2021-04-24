@@ -1,6 +1,6 @@
 --[[
 	<Complex> Complex.new(<Number> re, <Number> im)
-	returns a Complex object. Essentially an array where the 0th element is the real part, and the 1st element is the complex part.
+	returns a Complex object. Essentially an array where the 1st element is the real part, and the 2nd element is the complex part.
 
 	<Number> Complex.abs(<Complex> z)
 	returns the modulus (absolute value) of z.
@@ -14,6 +14,7 @@
 
 	__tostring metamethod is implemented.
 ]]
+local setmetatable = setmetatable
 local exp = math.exp
 local sin = math.sin
 local cos = math.cos
