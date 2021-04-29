@@ -81,9 +81,10 @@ end
 function InstancePool:Refill(Amount)
 	local CreateMethod = self[2]
 	local Pool         = self[1]
+	local PoolSize     = #Pool
 
-	for _ = 1, Amount do
-		table.insert(Pool, CreateMethod())
+	for i = PoolSize + 1, PoolSize + Amount do
+		Pool[i] = CreateMethod()
 	end
 end
 
