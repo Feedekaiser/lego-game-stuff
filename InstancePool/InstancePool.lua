@@ -40,21 +40,17 @@
 	Destroys the pool, along with the instances in it.
 	Essentially becomes an empty table with metamethods attached.
 ]]
-local tableremove   = table.remove
-local tableinsert   = table.insert
-local setmetatable  = setmetatable
-local next          = next
 local InstancePool  = {}
 
 InstancePool.__index = InstancePool
 
 function InstancePool:Get()
-	return tableremove(self[1]) or self[2]()
+	return table.remove(self[1]) or self[2]()
 end
 
 function InstancePool:Return(Instance)
 	self[3](Instance)
-	tableinsert(self[1], Instance)
+	table.insert(self[1], Instance)
 end
 
 function InstancePool:MassReturn(Array)
@@ -63,7 +59,7 @@ function InstancePool:MassReturn(Array)
 
 	for _, Instance in next, Array do
 		ReturnMethod(Instance)
-		tableinsert(Pool, Instance)
+		table.insert(Pool, Instance)
 	end
 end
 
@@ -87,12 +83,12 @@ function InstancePool:Refill(Amount)
 	local Pool         = self[1]
 
 	for _ = 1, Amount do
-		tableinsert(Pool, CreateMethod())
+		table.insert(Pool, CreateMethod())
 	end
 end
 
 function InstancePool.new(Amount, CreatMethod, ReturnMethod)
-	local self = setmetatable({{}, CreatMethod, ReturnMethod}, InstancePool)
+	local self = setmetatable({table.create(Amount), CreatMethod, ReturnMethod}, InstancePool)
 
 	self:Refill(Amount)
 
